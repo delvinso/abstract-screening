@@ -33,7 +33,6 @@ After git cloning this repo, your directory should look like:
 |-- pickles
 |-- results
 |-- run_models.py
-|-- sample_prevalence_experiments
 |-- scripts
 |-- submit_freq_all.sh
 `-- submit_transformers_all.sh
