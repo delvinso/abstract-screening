@@ -1,0 +1,17 @@
+.DS_Store
+*.e*
+*.o*
+*test*
+__pycache__
+**.ipynb_checkpoints
+**backup
+
+
+logs/
+results/
+cleaned_data/
+
+data_preprocessing/specter
+
+pickles/
+**/*.p
