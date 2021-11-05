@@ -1,9 +1,9 @@
 #!/bin/bash
-out_dir=YOURDIRHERE
-log_dir=YOURDIRHERE
+out_dir=/home/delvinso/sra-v2/model_embedding_experiments/results/threads
+log_dir=/home/delvinso/sra-v2/model_embedding_experiments/results/logs/
 mkdir -p $log_dir
 
-for dat in $(ls YOURDIRHERE | egrep raw) # each folder (embedding)
+for dat in $(ls /home/delvinso/sra-v2/pickles/ | egrep raw) # each folder (embedding)
 do
   bn_dat=$(basename ${dat})
   #dat_name=$(cut -d'_' -f1 <<< ${bn_dat})
@@ -16,8 +16,10 @@ do
     do
     if [ ${model} == "rf" ]; then 
       wt='24:00:00';threads='16';m='64g';vm='100g' # default 36hrs, 8 threads, 64gb, 100gb
-    else
-      wt='02:00:00';threads='16';m='32g';vm='64g'   # default 2hrs, 8 threads, 32gb, 64gb
+    elif [ ${model} == "knn" ];  then 
+      wt='02:00:00';threads='16';m='100g';vm='100g'   # default 2hrs, 8 threads, 64gb, 64gb # UPDATE MEMORY FOR KNN MANUSCRIPT
+    else 
+      wt='02:00:00';threads='16';m='64g';vm='100g'   # default 2hrs, 8 threads, 64gb, 64gb # UPDATE MEMORY FOR KNN MANUSCRIPT
     fi
     echo ${model}
     qsub <<EOF
@@ -29,11 +31,12 @@ do
 #PBS -o ${log_dir}/${embed}_${model}.e
 #PBS -e ${log_dir}/${embed}_${model}.o
 
-conda init bash
-conda activate abstract 
-cd INSERT_SRA_ROOT_DIR
+source ~/anaconda3/etc/profile.d/conda.sh
+conda init bash 
+conda activate sra-v2 
+cd /home/delvinso/sra-v2/
 
-python3 run_models.py \
+python3 model_embedding_experiments/run_models.py \
   --data=pickles/${dat}  \
   --outcome=labels \
   --name=${embed} \
