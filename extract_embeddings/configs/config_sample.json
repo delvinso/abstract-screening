@@ -1,9 +1,0 @@
-
-            {
-              "data" : "../cleaned_data/WASH_oct.tsv",
-              "max_len" : 512,
-              "seed" : 2020,
-              "cache": "../pickles\/raw",
-              "embed_type":"raw",
-              "nn_batch_size": "18"
-            }
